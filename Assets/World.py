@@ -1,27 +1,13 @@
-import pygame
+import pygame, math
+import numpy as np
 from Assets.platforms import platforms
-from Assets.settings import tile_size
+from Assets.settings import tile_size, level_map
 from Assets.player import player
 
 class World:
-    def __init__(self, level_data, surface):
+    def __init__(self, surface):
         self.display_surface = surface
-        self.setup_level(level_data)
 
-    def setup_level(self, layout):
-        self.platforms = pygame.sprite.Group()
-        self.player = pygame.sprite.GroupSingle()
-        for row_index, row in enumerate(layout):
-            for col_index, cell in enumerate(row):
-                x = col_index * tile_size
-                y = row_index * tile_size
-                if cell == 'X':
-                    platform = platforms((x, y), tile_size)
-                    self.platforms.add(platform)
-                if cell == 'P':
-                    player_sprite = player((x,y))
-                    self.player.add(player_sprite)
-                    
     def collision_x(self):
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
@@ -43,12 +29,10 @@ class World:
                 elif player.direction.y < 0 :
                     player.rect.top = sprite.rect.bottom
                     player.direction.y = -player.direction.y
-        
-        
+                                    
     def run(self):
         # level
         self.platforms.draw(self.display_surface)
-        
         # player
         self.player.update()
         self.collision_x()
