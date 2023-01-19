@@ -8,15 +8,13 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
-player = player((WIDTH/2,HEIGHT - 150))
-
 platform = platforms((WIDTH/2,HEIGHT-100), 50)
-player_sprite = pygame.sprite.GroupSingle()
-player_sprite.add(player)
-
 all_platforms = pygame.sprite.Group()
 all_platforms.add(platform)
 
+player = player((WIDTH/2,HEIGHT - 150), all_platforms)
+player_sprite = pygame.sprite.GroupSingle()
+player_sprite.add(player)
 
 def run():
   while True:
