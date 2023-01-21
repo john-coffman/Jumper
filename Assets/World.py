@@ -1,27 +1,30 @@
-import pygame, math
+import pygame
 from Assets.platforms import platforms
 from Assets.settings import *
 from Assets.player import player
 
 class World:
     def __init__(self, surface):
+        #screen
         self.display_surface = surface
+        #player
         self.player = player((WIDTH/2, HEIGHT-150))
-        self.init_platform = platforms((WIDTH/2, HEIGHT-100), 50)
-        self.setup(self.player, self.init_platform)
-        
-    def setup(self, player, platform):
-        self.all_platforms = pygame.sprite.Group()
         self.player_sprite = pygame.sprite.GroupSingle()
-        self.player_sprite.add(player)
-        self.all_platforms.add(platform)
+        self.player_sprite.add(self.player)
+        #platforms
+        self.init_platform = platforms((WIDTH/2, HEIGHT-100), 50)
+        self.all_platforms = pygame.sprite.Group()
+        self.all_platforms.add(self.init_platform)
+        self.create_platforms(self.init_platform)
 
-    def create_platforms(self):
+    def create_platforms(self, platform):
         if len(self.all_platforms) < 10:
-           p_x = randint(0, WIDTH)
-           p_y = randint(0, HEIGHT - 200)
-           new_platform = platforms((p_x, p_y), 50)
-           self.all_platforms.add(new_platform)
+           print(platform.rect.y)
+           p_w = randint(40, 60)
+           p_x = randint(0, WIDTH - p_w)
+           p_y = platform.rect.y - randint(80, 120)
+           platform = platforms((p_x, p_y), 50)
+           self.all_platforms.add(platform)
            
     def collision_x(self):
         player = self.player_sprite.sprite
@@ -49,7 +52,6 @@ class World:
         self.display_surface.fill('white')
         # level
         self.all_platforms.draw(self.display_surface)
-        self.create_platforms()
         # player
         self.player_sprite.update()
         self.collision_x()
