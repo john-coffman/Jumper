@@ -20,6 +20,7 @@ player,
 floor,
 ]
 
+SCROLL_THRESH = 600
 tile_size = 64
 WIDTH = 1280
 HEIGHT = len(level_map) * tile_size
