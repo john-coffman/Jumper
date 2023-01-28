@@ -1,6 +1,6 @@
 import pygame
 
-from Classes.settings import * 
+from Data.settings import * 
 from Classes.level import level
 from Classes.main_menu import main_menu
 pygame.init()
@@ -16,7 +16,7 @@ def main_screen():
       if event.type == pygame.QUIT:
         return False
 
-    if main_menu.is_clicked() == "play_button":
+    if main_menu.is_clicked() == "play button":
       run()
       
     main_menu.run()

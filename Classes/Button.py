@@ -1,17 +1,15 @@
 import pygame
-from Assets.settings import *
+from Data.settings import *
 
-class Button(pygame.sprite.Sprite):
-
-  def __init__(self, pos, title):
-    super().__init__()
-    self.image = pygame.Surface((50, 50))
-    self.image.fill("red")
-    self.rect = self.image.get_rect(center = pos)
+class Button():
+  def __init__(self, pos, title):   
+    # font 
     self.title = title
+    self.text = pygame.font.SysFont(None, 48).render(self.title, True, "red", "white" )
+    self.textrect = self.text.get_rect(center = pos)
 
   def click(self):
     mx, my = pygame.mouse.get_pos()
     clicked = pygame.mouse.get_pressed()
-    if self.rect.collidepoint(mx, my) and clicked == (True, False, False):
+    if self.textrect.collidepoint(mx, my) and clicked == (True, False, False):
       return self.title

@@ -1,5 +1,5 @@
 import pygame
-from Assets.settings import HEIGHT, WIDTH
+from Data.settings import HEIGHT, WIDTH
 sprite = pygame.image.load('Assets/sprite.png')
 
 class player(pygame.sprite.Sprite):

@@ -1,7 +1,7 @@
 import pygame
-from Assets.platforms import platforms
-from Assets.settings import *
-from Assets.player import player
+from Classes.platforms import platforms
+from Data.settings import *
+from Classes.player import player
 
 class level:
     def __init__(self, surface):
@@ -16,8 +16,7 @@ class level:
         self.all_platforms = pygame.sprite.Group()
         self.all_platforms.add(self.init_platform)
 
-
-    def create_platforms(self, platform):
+    def create_platforms(self):
         if len(self.all_platforms) < 10:
            p_w = randint(40, 60)
            p_x = randint(0, WIDTH - p_w)
@@ -39,11 +38,10 @@ class level:
                     player.jump() 
   
     def run(self):
-        print("hello world")
         self.display_surface.fill('white')
         # level
         self.all_platforms.draw(self.display_surface)
-        self.create_platforms(self.init_platform)
+        self.create_platforms()
         # player
         self.player_sprite.update()
         self.collision_x()
