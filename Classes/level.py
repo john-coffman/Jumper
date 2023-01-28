@@ -3,10 +3,13 @@ from Classes.platforms import platforms
 from Data.settings import *
 from Classes.player import player
 
+
+
 class level:
-    def __init__(self, surface):
+    def __init__(self, surface, bg):
         #screen
         self.display_surface = surface
+        self.bg = bg 
         #player
         self.player = player((WIDTH/2, HEIGHT-150))
         self.player_sprite = pygame.sprite.GroupSingle()
@@ -23,6 +26,12 @@ class level:
            p_y = self.init_platform.rect.y - randint(80, 120)
            self.init_platform = platforms((p_x, p_y), 50)
            self.all_platforms.add(self.init_platform)
+           
+    def empty_platforms(self):
+        self.init_platform = platforms((WIDTH/2, HEIGHT-100), 50)
+        self.all_platforms.empty()
+        self.all_platforms.add(self.init_platform)
+        self.create_platforms()
 
     def collision_x(self):
         player = self.player_sprite.sprite
@@ -38,7 +47,7 @@ class level:
                     player.jump() 
   
     def run(self):
-        self.display_surface.fill('white')
+        self.display_surface.blit(self.bg, (0, 0))
         # level
         self.all_platforms.draw(self.display_surface)
         self.create_platforms()
@@ -50,5 +59,6 @@ class level:
         
     def reset(self):
         self.player.reset_player_pos()
+        self.empty_platforms()
 
         

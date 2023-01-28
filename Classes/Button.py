@@ -5,7 +5,7 @@ class Button():
   def __init__(self, pos, title):   
     # font 
     self.title = title
-    self.text = pygame.font.SysFont(None, 48).render(self.title, True, "red", "white" )
+    self.text = pygame.font.SysFont(None, 48).render(self.title, True, "red")
     self.textrect = self.text.get_rect(center = pos)
 
   def click(self):
