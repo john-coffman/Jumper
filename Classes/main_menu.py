@@ -1,6 +1,6 @@
 import pygame
 from Assets.Button import Button
-
+from Assets.settings import *
 class main_menu():
   def __init__(self, surface):
     self.display_surface = surface
@@ -8,7 +8,7 @@ class main_menu():
     self.all_button_sprites = pygame.sprite.Group()
     
   def create_buttons(self):
-    play_button = Button((50, 50), "play_button")
+    play_button = Button((WIDTH/2, HEIGHT/2), "play_button")
     options_button = Button((150, 50), "options_button")
     self.all_button_sprites.add(play_button)
     self.all_button_sprites.add(options_button)
@@ -19,7 +19,6 @@ class main_menu():
     for button in self.buttons:
       return button.click()
      
-      
   def run(self):
     self.display_surface.fill( "white")
     self.create_buttons()

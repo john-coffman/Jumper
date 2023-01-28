@@ -1,4 +1,5 @@
 import pygame
+from Assets.settings import HEIGHT, WIDTH
 sprite = pygame.image.load('Assets/sprite.png')
 
 class player(pygame.sprite.Sprite):
@@ -11,7 +12,13 @@ class player(pygame.sprite.Sprite):
         self.speed = 4
         self.jump_speed = -10
         self.gravity = .08
-    
+        
+    def reset_player_pos(self):
+        self.rect.y = HEIGHT-150
+        self.rect.x = WIDTH/2
+        self.direction.y = 0
+        self.direction.x = 0 
+                
     def player_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -31,4 +38,4 @@ class player(pygame.sprite.Sprite):
     def update(self):
         self.player_input()
 
-        
+

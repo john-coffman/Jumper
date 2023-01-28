@@ -3,7 +3,7 @@ from Assets.platforms import platforms
 from Assets.settings import *
 from Assets.player import player
 
-class World:
+class level:
     def __init__(self, surface):
         #screen
         self.display_surface = surface
@@ -16,15 +16,15 @@ class World:
         self.all_platforms = pygame.sprite.Group()
         self.all_platforms.add(self.init_platform)
 
-        
-    def create_platforms(self):
+
+    def create_platforms(self, platform):
         if len(self.all_platforms) < 10:
-            p_w = randint(40, 60)
-            p_x = randint(0, WIDTH - p_w)
-            p_y = self.init_platform.rect.y - randint(80, 120)
-            self.init_platform = platforms((p_x, p_y), p_w)
-            self.all_platforms.add(self.init_platform)
-           
+           p_w = randint(40, 60)
+           p_x = randint(0, WIDTH - p_w)
+           p_y = self.init_platform.rect.y - randint(80, 120)
+           self.init_platform = platforms((p_x, p_y), 50)
+           self.all_platforms.add(self.init_platform)
+
     def collision_x(self):
         player = self.player_sprite.sprite
         player.rect.x += player.direction.x * player.speed
@@ -37,14 +37,20 @@ class World:
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
                     player.jump() 
-                                    
+  
     def run(self):
+        print("hello world")
         self.display_surface.fill('white')
         # level
-        self.create_platforms()
         self.all_platforms.draw(self.display_surface)
+        self.create_platforms(self.init_platform)
         # player
         self.player_sprite.update()
-        self.collision_y()
         self.collision_x()
+        self.collision_y()
         self.player_sprite.draw(self.display_surface)
+        
+    def reset(self):
+        self.player.reset_player_pos()
+
+        
