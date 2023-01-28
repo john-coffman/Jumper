@@ -10,7 +10,7 @@ class player(pygame.sprite.Sprite):
         #movement of player
         self.direction = pygame.math.Vector2(0,0)
         self.speed = 4
-        self.jump_speed = -10
+        self.jump_speed = -5
         self.gravity = .08
         
     def reset_player_pos(self):

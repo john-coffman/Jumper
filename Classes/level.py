@@ -4,12 +4,12 @@ from Data.settings import *
 from Classes.player import player
 
 
-
 class level:
     def __init__(self, surface, bg):
         #screen
         self.display_surface = surface
         self.bg = bg 
+        self.bg_scroll = 0 
         #player
         self.player = player((WIDTH/2, HEIGHT-150))
         self.player_sprite = pygame.sprite.GroupSingle()
@@ -37,20 +37,38 @@ class level:
         player = self.player_sprite.sprite
         player.rect.x += player.direction.x * player.speed
                     
-    def collision_y(self):
+    def collision_y(self): 
         player = self.player_sprite.sprite
         player.apply_gravity()
         for sprite in self.all_platforms.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
-                    player.jump() 
-  
+                    player.jump()
+                    
+    def scroll_y(self):
+        scroll = 0 
+        player = self.player_sprite.sprite
+        if player.rect.top <= SCROLL_THRESH and player.direction.y < 0:
+            scroll = -player.direction.y
+        return scroll
+    
+    def draw_bg(self):
+        self.display_surface.blit(self.bg, (0,0 + self.bg_scroll))
+        self.display_surface.blit(self.bg, (0, -200 + self.bg_scroll))
+    
     def run(self):
-        self.display_surface.blit(self.bg, (0, 0))
+        #scroll control
+        scroll = self.scroll_y()
+        self.bg_scroll += scroll
+        if self.bg_scroll >= 200:
+            self.bg_scroll = 0
+        self.draw_bg()
+        
         # level
-        self.all_platforms.draw(self.display_surface)
         self.create_platforms()
+        self.all_platforms.update(scroll)
+        self.all_platforms.draw(self.display_surface)
         # player
         self.player_sprite.update()
         self.collision_x()

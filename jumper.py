@@ -9,6 +9,7 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
+# general background for the screens
 bg = pygame.image.load("./Assets/background.png")
 bg = pygame.transform.scale(bg, (700, 800)).convert()
 
