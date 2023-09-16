@@ -1,6 +1,5 @@
-from Classes.button import Button
+from Classes.Button import Button
 from Data.settings import *
-
 
 class main_menu():
   def __init__(self, surface, bg):

@@ -54,7 +54,7 @@ class level:
         return scroll
     
     def draw_bg(self):
-        self.display_surface.blit(self.bg, (0,0 + self.bg_scroll))
+        self.display_surface.blit(self.bg, (0, 0 + self.bg_scroll))
         self.display_surface.blit(self.bg, (0, -200 + self.bg_scroll))
     
     def run(self):
@@ -79,4 +79,3 @@ class level:
         self.player.reset_player_pos()
         self.empty_platforms()
 
-        
