@@ -10,6 +10,7 @@ class level:
         self.display_surface = surface
         self.bg = bg 
         self.bg_scroll = 0 
+        self.score = 0
         #player
         self.player = player((WIDTH/2, HEIGHT-150))
         self.player_sprite = pygame.sprite.GroupSingle()
@@ -51,11 +52,21 @@ class level:
         player = self.player_sprite.sprite
         if player.rect.top <= SCROLL_THRESH and player.direction.y < 0:
             scroll = -player.direction.y
+            self.score += int(scroll) % 10
         return scroll
     
     def draw_bg(self):
         self.display_surface.blit(self.bg, (0, 0 + self.bg_scroll))
         self.display_surface.blit(self.bg, (0, -200 + self.bg_scroll))
+        self.draw_score()
+
+    def draw_score(self):
+        self.my_font = pygame.font.SysFont('Comic Sans MS', 30)
+        self.text_surface = self.my_font.render("Score: " + str(self.score), False, (0, 0, 0))
+        if(self.score >= 1000):
+            self.display_surface.blit(self.text_surface, (WIDTH-120, 10))
+        else:
+            self.display_surface.blit(self.text_surface, (WIDTH-110, 10))
     
     def run(self):
         #scroll control
@@ -64,7 +75,6 @@ class level:
         if self.bg_scroll >= 200:
             self.bg_scroll = 0
         self.draw_bg()
-        
         # level
         self.create_platforms()
         self.all_platforms.update(scroll)
@@ -78,4 +88,5 @@ class level:
     def reset(self):
         self.player.reset_player_pos()
         self.empty_platforms()
+        self.score = 0 
 
